@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.db
+test*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+data/
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+report.md
+tests/
