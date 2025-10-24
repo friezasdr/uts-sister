@@ -10,7 +10,7 @@ from src.database import Database
 
 logger = logging.getLogger(__name__)
 
-class EventProcessor:  # ← GANTI nama class juga!
+class EventProcessor: 
     """
     Event processor yang memproses event secara idempotent.
     Menggunakan database untuk memastikan setiap event hanya diproses sekali.
@@ -98,11 +98,11 @@ class EventProcessor:  # ← GANTI nama class juga!
         """
         self.stats["received"] += 1
         
-        # Idempotency check: apakah event sudah pernah diproses?
+        # Idempotency check
         is_duplicate = await self.database.is_processed(event.topic, event.event_id)
         
         if is_duplicate:
-            # Event sudah pernah diproses, drop sebagai duplicate
+            # Kalai event sudah pernah diproses, drop sebagai duplicate
             self.stats["duplicate_dropped"] += 1
             logger.warning(
                 f"[Worker {worker_id}] DUPLICATE DROPPED: topic={event.topic}, "
@@ -110,16 +110,9 @@ class EventProcessor:  # ← GANTI nama class juga!
             )
             return
         
-        # Event belum pernah diproses, lakukan processing
+        #  processing
         try:
-            # Simulasi processing logic
-            # Dalam implementasi nyata, di sini bisa ada:
-            # - Write ke database
-            # - Kirim ke downstream services
-            # - Aggregation logic
-            # - Analytics processing
-            # - dll
-            
+
             logger.info(
                 f"[Worker {worker_id}] PROCESSING: topic={event.topic}, "
                 f"event_id={event.event_id}, source={event.source}"
@@ -148,7 +141,7 @@ class EventProcessor:  # ← GANTI nama class juga!
                 f"topic={event.topic}, event_id={event.event_id}, error={e}",
                 exc_info=True
             )
-            # Dalam production, bisa implement retry mechanism atau dead letter queue
+
     
     def get_stats(self) -> Dict:
         """Get processor statistics"""

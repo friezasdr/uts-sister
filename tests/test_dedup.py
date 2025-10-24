@@ -5,15 +5,15 @@ import pytest
 import asyncio
 import os
 import tempfile
-from src.database import Database  # ← GANTI INI!
+from src.database import Database 
 
 @pytest.fixture
-async def database():  # ← GANTI INI!
+async def database():  
     """Fixture untuk temporary database"""
     with tempfile.NamedTemporaryFile(delete=False, suffix='.db') as tmp:
         db_path = tmp.name
     
-    db = Database(db_path)  # ← GANTI INI!
+    db = Database(db_path)  
     yield db
     
     # Cleanup
@@ -21,7 +21,7 @@ async def database():  # ← GANTI INI!
         os.unlink(db_path)
 
 @pytest.mark.asyncio
-async def test_dedup_mark_and_check(database):  # ← GANTI INI!
+async def test_dedup_mark_and_check(database): 
     """Test: Mark event as processed dan check deduplication"""
     topic = "test.topic"
     event_id = "test_event_123"
@@ -39,7 +39,7 @@ async def test_dedup_mark_and_check(database):  # ← GANTI INI!
     assert result == False, "Second mark should fail (duplicate)"
 
 @pytest.mark.asyncio
-async def test_dedup_different_topics(database):  # ← GANTI INI!
+async def test_dedup_different_topics(database):  
     """Test: Same event_id pada different topics should be treated as different"""
     event_id = "same_id"
     topic1 = "topic.one"
@@ -58,7 +58,7 @@ async def test_dedup_different_topics(database):  # ← GANTI INI!
     assert await database.is_processed(topic2, event_id) == True
 
 @pytest.mark.asyncio
-async def test_dedup_persistence(database):  # ← GANTI INI!
+async def test_dedup_persistence(database): 
     """Test: Database persistence across reconnection"""
     topic = "persist.topic"
     event_id = "persist_event"
@@ -75,7 +75,7 @@ async def test_dedup_persistence(database):  # ← GANTI INI!
     assert is_processed == True, "Dedup state should persist across restart"
 
 @pytest.mark.asyncio
-async def test_get_all_topics(database):  # ← GANTI INI!
+async def test_get_all_topics(database): 
     """Test: Get all unique topics"""
     await database.mark_processed("topic.a", "event1")
     await database.mark_processed("topic.b", "event2")
@@ -88,7 +88,7 @@ async def test_get_all_topics(database):  # ← GANTI INI!
     assert "topic.b" in topics
 
 @pytest.mark.asyncio
-async def test_concurrent_dedup(database):  # ← GANTI INI!
+async def test_concurrent_dedup(database):  
     """Test: Concurrent marking same event (race condition)"""
     topic = "concurrent.topic"
     event_id = "concurrent_event"
