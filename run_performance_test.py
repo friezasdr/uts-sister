@@ -134,9 +134,9 @@ def run_performance_test(total_events=5000, duplicate_rate=0.25, workers=10):
             print(f"✓ Duplicate rate >= 20%: {meets_duplicate} ({stats['duplicate_dropped']/stats['received']*100:.2f}%)")
             
             if meets_total and meets_duplicate:
-                print("\n🎉 TEST PASSED! Sistem memenuhi requirement minimal.")
+                print("\n TEST PASSED! Sistem memenuhi requirement minimal.")
             else:
-                print("\n⚠️ TEST FAILED! Sistem belum memenuhi requirement.")
+                print("\n TEST FAILED! Sistem belum memenuhi requirement.")
         else:
             print(f"Failed to get stats: {response.status_code}")
     except Exception as e:
